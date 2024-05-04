@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cek Status Website</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: black; /* Warna latar belakang hitam */
+            overflow: hidden;
+        }
+        #container {
+            position: relative;
+            overflow: hidden;
+            border: 10px solid transparent;
+            border-radius: 20px;
+            backdrop-filter: blur(10px); /* Efek blur pada border */
+        }
+        #videoBackground {
+              /* Set video to cover entire container */
+  min-width: 100%; 
+  min-height: 100%; 
+  
+  /* Set position and scaling */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+
+  /* Set maximum width and height */
+  max-width: 800px;
+  max-height: 600px;
+        }
+        #statusResult {
+            color: white;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <video id="videoBackground" autoplay muted loop>
+            <source src="ironman.mp4" type="video/mp4"> <!-- Ganti dengan video yang Anda inginkan -->
+        </video>
+        <h1 style="text-align: center; color: white;">Cek Status Website</h1>
+        <input type="text" id="urlInput" placeholder="Masukkan URL" style="display: block; margin: 0 auto;">
+        <button onclick="cekStatus()" style="display: block; margin: 20px auto;">Cek</button>
+        <p id="statusResult"></p>
+    </div>
+
+    <script>
+        function cekStatus() {
+            var url = document.getElementById("urlInput").value;
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", url, true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status >= 200 && xhr.status < 300) {
+                        document.getElementById("statusResult").innerText = "Website aktif (" + xhr.status + ")";
+                    } else {
+                        document.getElementById("statusResult").innerText = "Website error (" + xhr.status + ")";
+                    }
+                }
+            };
+            xhr.send();
+        }
+    </script>
+</body>
+</html>
